@@ -445,16 +445,45 @@ bool printingIsPaused() {
   return did_pause_print || print_job_timer.isPaused() || IS_SD_PAUSED();
 }
 
+/**
+ * ********************************************
+ * New Part 
+ * by MM 
+ */
+
+/**
+ * Printer Door State 
+ */
+bool doorIsClosed() {
+  return true;
+}
+
+/**
+ * Printer Door Magnet 
+ */
+bool magnetIsActiv() {
+  return true;
+}
+
+/**
+ * Printer Lüfter  
+ */
+bool topFansAreRunning() {
+  return true;
+}
+
+
 void startOrResumeJob() {
-  if (!printingIsPaused()) {
-    TERN_(GCODE_REPEAT_MARKERS, repeat.reset());
-    TERN_(CANCEL_OBJECTS, cancelable.reset());
-    TERN_(LCD_SHOW_E_TOTAL, e_move_accumulator = 0);
-    #if BOTH(LCD_SET_PROGRESS_MANUALLY, USE_M73_REMAINING_TIME)
-      ui.reset_remaining_time();
-    #endif
-  }
-  print_job_timer.start();
+
+    if (!printingIsPaused()) {
+      TERN_(GCODE_REPEAT_MARKERS, repeat.reset());
+      TERN_(CANCEL_OBJECTS, cancelable.reset());
+      TERN_(LCD_SHOW_E_TOTAL, e_move_accumulator = 0);
+      #if BOTH(LCD_SET_PROGRESS_MANUALLY, USE_M73_REMAINING_TIME)
+        ui.reset_remaining_time();
+      #endif
+    }
+    print_job_timer.start();
 }
 
 #if ENABLED(SDSUPPORT)
